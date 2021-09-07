@@ -1,12 +1,9 @@
 import os
 import torch
-
-from simclr import SimCLR
 from simclr.modules import LARS
 
 
 def load_optimizer(args, model):
-
     scheduler = None
     if args.optimizer == "Adam":
         optimizer = torch.optim.Adam(model.parameters(), lr=3e-4)  # TODO: LARS
@@ -32,7 +29,7 @@ def load_optimizer(args, model):
 
 
 def save_model(args, model, optimizer):
-    out = os.path.join(args.model_path, "checkpoint_{}.tar".format(args.current_epoch))
+    out = os.path.join(args.model_path, "checkpoint_{}.pt".format(args.current_epoch))
 
     # To save a DataParallel model generically, save the model.module.state_dict().
     # This way, you have the flexibility to load the model any way you want to any device you want.
