@@ -1,3 +1,4 @@
+# Original resnet method from Spijkervet implementation.
 import torchvision
 
 
