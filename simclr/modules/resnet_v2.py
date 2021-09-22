@@ -183,4 +183,3 @@ def name_to_params(checkpoint):
 
     return depth, width, sk_ratio
 
-
