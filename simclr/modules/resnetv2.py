@@ -155,7 +155,7 @@ class ContrastiveHead(nn.Module):
         return x
 
 
-def get_resnet(depth=50, width_multiplier=1, sk_ratio=0):  # sk_ratio=0.0625 is recommended
+def get_resnet_v2(depth=50, width_multiplier=1, sk_ratio=0):  # sk_ratio=0.0625 is recommended
     layers = {50: [3, 4, 6, 3], 101: [3, 4, 23, 3], 152: [3, 8, 36, 3], 200: [3, 24, 36, 3]}[depth]
     resnet = ResNet(layers, width_multiplier, sk_ratio)
     return resnet, ContrastiveHead(resnet.channels_out)
