@@ -1,4 +1,5 @@
 import torch.nn as nn
+from simclr.modules.resnet_v2 import get_resnet_v2
 from simclr.modules.identity import Identity
 
 
@@ -35,4 +36,27 @@ class SimCLR(nn.Module):
 
         z_i = self.projector(h_i)
         z_j = self.projector(h_j)
+        return h_i, h_j, z_i, z_j
+
+
+class SimCLRv2(nn.Module):
+    def __init__(self, resnet_depth: int = 50, resnet_width_multiplier: int = 2,
+                 sk_ratio: float = 0.0625, pretrained_weights: str = None):
+        """SimCLRv2 Implementation
+            Using ResNet architecture from Pytorch converter which includes projection head.
+
+        """
+        super(SimCLRv2, self).__init__()
+        self.encoder, self.projector = get_resnet_v2(depth=resnet_depth,
+                                                     width_multiplier=resnet_width_multiplier,
+                                                     sk_ratio=sk_ratio)
+        if pretrained_weights:
+            self.encoder.load_state_dict(torch.load(pretrained_weights, map_location='cpu')['resnet'])
+
+    def forward(self, x_i, x_j):
+        h_i = self.encoder(x_i)
+        h_j = self.encoder(x_j)
+        z_i = self.projector(h_i)
+        z_j = self.projector(h_j)
+
         return h_i, h_j, z_i, z_j
