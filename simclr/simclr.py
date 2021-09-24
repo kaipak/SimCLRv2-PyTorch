@@ -1,4 +1,5 @@
 import torch.nn as nn
+import torch
 from simclr.modules.resnet_v2 import get_resnet_v2
 from simclr.modules.identity import Identity
 
