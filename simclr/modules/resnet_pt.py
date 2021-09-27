@@ -1,7 +1,9 @@
+# Original resnet method from Spijkervet implementation.
 import torchvision
 
 
-def get_resnet(name, pretrained=False):
+def get_resnet_pt(name, pretrained=False):
+    """Retrieve Resnet from Pytorch Library"""
     resnets = {
         "resnet18": torchvision.models.resnet18(pretrained=pretrained),
         "resnet50": torchvision.models.resnet50(pretrained=pretrained),
