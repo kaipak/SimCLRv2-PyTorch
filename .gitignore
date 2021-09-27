@@ -1,6 +1,8 @@
 # Datasets
 data/
 datasets/
+save/
+runs/
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,jupyternotebooks
