@@ -12,6 +12,7 @@ class SimCLR(nn.Module):
     """
 
     def __init__(self, encoder, projection_dim, n_features):
+        """Original SimCLR Implementation from Spijkervet Code"""
         super(SimCLR, self).__init__()
 
         self.encoder = encoder
@@ -48,16 +49,21 @@ class SimCLRv2(nn.Module):
 
         """
         super(SimCLRv2, self).__init__()
+
         self.encoder, self.projector = get_resnet_v2(depth=resnet_depth,
                                                      width_multiplier=resnet_width_multiplier,
                                                      sk_ratio=sk_ratio)
         if pretrained_weights:
             self.encoder.load_state_dict(torch.load(pretrained_weights, map_location='cpu')['resnet'])
+            self.projector.load_state_dict(torch.load(pretrained_weights, map_location='cpu')['head'])
 
     def forward(self, x_i, x_j):
+        """"""
         h_i = self.encoder(x_i)
         h_j = self.encoder(x_j)
+        foo = torch.nn.Sequential(*(list(self.projector.children())[0][:3]))(h_i)
         z_i = self.projector(h_i)
+        print(torch.all(foo==z_i))
         z_j = self.projector(h_j)
 
         return h_i, h_j, z_i, z_j
