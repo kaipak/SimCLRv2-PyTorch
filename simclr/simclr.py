@@ -56,24 +56,24 @@ class SimCLRv2(nn.Module):
             self.projector.load_state_dict(torch.load(pretrained_weights, map_location='cpu')['head'])
 
     def forward(self, x_i, x_j):
-        """"""
         h_i = self.encoder(x_i)
         h_j = self.encoder(x_j)
-        foo = torch.nn.Sequential(*(list(self.projector.children())[0][:]))(h_i)
         z_i = self.projector(h_i)
         z_j = self.projector(h_j)
 
         return h_i, h_j, z_i, z_j
 
+
 class SimCLRv2_ft(nn.Module):
     """Take a pretrained SimCLRv2 Model and Finetune with linear layer"""
-    def __init__(self, simclrv2_model):
+    def __init__(self, simclrv2_model, n_classes):
+        super(SimCLRv2_ft, self).__init__()
         self.encoder = simclrv2_model.encoder
         # From v2 paper, we just need the first layer from projector
         self.projector = torch.nn.Sequential(*(list(simclrv2_model.projector.children())[0][:2]))
         # Hack
         linear_in_features = self.projector[0].out_features
-        self.linear = nn.Linear(linear_in_features)
+        self.linear = nn.Linear(linear_in_features, n_classes)
 
     def forward(self, x):
         h = self.encoder(x)
