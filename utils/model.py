@@ -28,7 +28,7 @@ def load_optimizer(args, model):
     return optimizer, scheduler
 
 
-def save_model(args, model, optimizer):
+def save_model(args, model):
     out = os.path.join(args.model_path, "checkpoint_{}.pt".format(args.current_epoch))
 
     # To save a DataParallel model generically, save the model.module.state_dict().
