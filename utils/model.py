@@ -11,6 +11,7 @@ def load_optimizer(args, model):
         # optimized using LARS with linear learning rate scaling
         # (i.e. LearningRate = 0.3 × BatchSize/256) and weight decay of 10−6.
         learning_rate = 0.3 * args.batch_size / 256
+        print(f"LARS learning rate computed at: {learning_rate}")
         optimizer = LARS(
             model.parameters(),
             lr=learning_rate,
@@ -26,7 +27,6 @@ def load_optimizer(args, model):
         raise NotImplementedError
 
     return optimizer, scheduler
-
 
 def save_model(args, model):
     out = os.path.join(args.model_path, "checkpoint_{}.pt".format(args.current_epoch))
