@@ -7,4 +7,6 @@ in PyTorch. ResNet architecture and contrastive head are borrowed from
 [Separius'](https://github.com/Separius/SimCLRv2-Pytorch) excellent repo for converting 
 Tensorflow weights to PyTorch. 
 
+Experimental.
+
 
